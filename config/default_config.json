@@ -1,0 +1,22 @@
+{
+  "search_template_collections": [
+    {
+      "name": "collection 1",
+      "search_templates": [
+        {
+          "name": "google docs",
+          "template": "https://docs.google.com/document/u/0/?tgif=d&q={{ .Query }}"
+        }
+      ]
+    },
+    {
+      "name": "collection 2",
+      "search_templates": [
+        {
+          "name": "github org",
+          "template": "https://github.com/search?q=org%3Anathan-boyd+{{ .Query }}"
+        }
+      ]
+    }
+  ]
+}
