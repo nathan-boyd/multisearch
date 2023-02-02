@@ -31,7 +31,7 @@ func GetDefaultConfigFile() string {
 	return fmt.Sprintf("%s/.multisearch.json", homeDir)
 }
 
-func GetTemplateCollection(cfgFile string) (err error, collection SearchTemplateCollection) {
+func GetTemplateCollection(cfgFile string) (collection SearchTemplateCollection, err error) {
 	if len(cfgFile) == 0 {
 		cfgFile = GetDefaultConfigFile()
 	}

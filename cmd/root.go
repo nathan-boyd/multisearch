@@ -14,14 +14,14 @@ var userSelectedCollection string = "ALL"
 var verbose bool
 var cfgFile string
 
-var error_no_args = errors.New("Not enough arguments.")
-var error_to_many_args = errors.New("Too many arguments, multi word queries should be quoted")
+var error_no_args = errors.New("not enough arguments")
+var error_to_many_args = errors.New("too many arguments, multi word queries should be quoted")
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "multisearch",
 	Short: "search a configured site collection",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(_ *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return error_no_args
 		}
@@ -29,7 +29,7 @@ var rootCmd = &cobra.Command{
 			return error_to_many_args
 		}
 		search_query := args[0]
-		return search.SearchCollection(cmd, search_query, userSelectedCollection, cfgFile)
+		return search.SearchCollection(search_query, userSelectedCollection, cfgFile)
 	},
 }
 

@@ -4,10 +4,9 @@ import (
 	"bytes"
 	"text/template"
 
-	. "github.com/ahmetb/go-linq/v3"
+	linq "github.com/ahmetb/go-linq/v3"
 	"github.com/nathan-boyd/multisearch/config"
 	"github.com/pkg/browser"
-	"github.com/spf13/cobra"
 )
 
 type SearchTemplateData struct {
@@ -15,20 +14,20 @@ type SearchTemplateData struct {
 }
 
 func GetTemplatesFromCollection(allCollections config.SearchTemplateCollection, selected_collection string) (urls []config.SearchTemplate) {
-	From(allCollections.Items).
+	linq.From(allCollections.Items).
 		WhereT(func(c config.SearchTemplateContainer) bool {
 			return c.Name == selected_collection
 		}).
-		SelectManyT(func(c config.SearchTemplateContainer) Query {
-			return From(c.SearchTemplates)
+		SelectManyT(func(c config.SearchTemplateContainer) linq.Query {
+			return linq.From(c.SearchTemplates)
 		}).
 		ToSlice(&urls)
 	return
 }
 
-func SearchCollection(cmd *cobra.Command, search_query string, selected_collection string, cfgFile string) (err error) {
+func SearchCollection(search_query string, selected_collection string, cfgFile string) (err error) {
 	var allCollections config.SearchTemplateCollection
-	if err, allCollections = config.GetTemplateCollection(cfgFile); nil != err {
+	if allCollections, err = config.GetTemplateCollection(cfgFile); nil != err {
 		return
 	}
 	searchTemplates := GetTemplatesFromCollection(allCollections, selected_collection)
